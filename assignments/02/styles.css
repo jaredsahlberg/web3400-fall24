@@ -1,11 +1,122 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: lightgray;
 }
-
 h1 {
     color: blue;
 }
-
-p {
-    color: green;
+h2 {
+    color: darkgray;
 }
+header {
+    background-color: green;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+nav {
+    background-color: lightyellow;
+    padding: 10px;
+    text-align: center;
+}
+nav a {
+    color: navy;
+    text-decoration: none;
+    margin: 0 15px;
+}
+nav a:hover {
+    text-decoration: underline;
+    color: red;
+}
+main {
+    margin: 20px;
+}
+section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+article {
+    background-color: lightgray;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+aside {
+    background-color: lightgray;
+    padding: 15px;
+    border-left: 5px solid green;
+    margin-bottom: 20px;
+}
+b, strong {
+    font-weight: bold;
+}
+i, em {
+    font-style: italic;
+}
+ol, ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    margin-bottom: 5px;
+}
+img {
+    width: 100px;
+    height: auto;
+    border: 1px solid black;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+}
+th {
+    background-color: green;
+    color: white;
+}
+form {
+    margin: 20px 0;
+}
+input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+button {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: green;
+}
+audio, video {
+    display: block;
+    margin: 20px 0;
+}
+footer {
+    background-color: lightgray;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+
