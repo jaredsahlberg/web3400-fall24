@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My First Webpage</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@vizuaalog/bulmajs@0.12/dist/bulma.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A brief description of the page">
+</head>
+<body>
+    <header>
+        <h1>Welcome to HTML!</h1>
+    </header>
+    <nav>
+        <a href="#">Home</a> | <a href="#">About</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Introduction to HTML</h2>
+            <p>This is a paragraph on my first webpage.</p>
+        </section>
+        <article>
+            <h2>Exploring Text Formatting and Lists</h2>
+            <p><b>Bold Text</b><br>
+            <i>Italic Text</i><br>
+            <strong>Strong Text</strong><br>
+            <em>Emphasized Text</em></p>
+            <ol>
+                <li>First Item</li>
+                <li>Second Item</li>
+            </ol>
+            <ul>
+                <li>Bullet Item</li>
+                <li>Another Bullet Item</li>
+            </ul>
+        </article>
+        <aside>
+            <h2>Related Links</h2>
+            <a href="https://weber.edu" target="_blank">Visit weber.edu</a>
+        </aside>
+        <section>
+            <h2>Hyperlinks and Images</h2>
+            <img width="320" src="https://source.unsplash.com/random/900x700/?fruit" alt="Descriptive text for the image">
+        </section>
+        <article>
+            <h2>Tables and Forms</h2>
+            <table>
+                <tr>
+                    <th>Header 1</th>
+                    <th>Header 2</th>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                </tr>
+            </table>
+            <hr>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name"><br>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message"></textarea><br>
+                <button type="submit">Submit</button>
+            </form>
+        </article>
+        <section>
+            <h2>Embedded Audio and Video</h2>
+            <audio controls>
+                <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <hr>
+            <video controls>
+                <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright © 2024</p>
+    </footer>
+</body>
+</html>
