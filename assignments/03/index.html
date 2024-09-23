@@ -8,11 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@vizuaalog/bulmajs@0.12/dist/bulma.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
 </head>
-<body>
+<body class="has-navbar-fixed-top">
     <!-- BEGIN PAGE HEADER -->
-    <header>
+    <header class="container">
         <!-- BEGIN MAIN NAV -->
-        <nav class="navbar" role="navigation" aria-label="main navigation">
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="https://bulma.io">
                     <span class="icon-text">
@@ -44,20 +44,20 @@
             </div>
         </nav>
         <!-- END MAIN NAV -->
-        <section><!--only for spacing purposes--></section>
+        <section class="block">&nbsp;<!--only for spacing purposes--></section>
         <!-- BEGIN HERO -->
-        <section>
-            <div>
-                <p>Hero title</p>
-                <p>Hero subtitle</p>
+        <section><section class="hero is-info">
+            <div class="hero-body">
+              <p class="title">Hero title</p>
+              <p class="subtitle">Hero subtitle</p>
             </div>
         </section>
         <!-- END HERO -->
     </header>
     <!-- END PAGE HEADER -->
     <!-- BEGIN MAIN PAGE CONTENT -->
-    <main>
-        <section>
+    <main class="container">
+        <section class="content">
             <h1>Working with titles</h1>
             <h2>and <strong>subtitles</strong> is a <em>simple</em> way to add context to your message</h2>
             <hr>
@@ -112,9 +112,9 @@
                 </table>
             </div>
         </section>
-        <section>
-            <h2>Working with tables</h2>
-            <table>
+        <section class="section">
+            <h2 class="title">Working with tables</h2>
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                     <tr>
                         <th>Header 1</th>
@@ -153,9 +153,9 @@
                 </tfoot>
             </table>
         </section>
-        <section>
-            <h2>Working with forms</h2>
-            <div>
+        <section class="section">
+            <h2 class="title">Working with forms</h2>
+            <div class="box">
                 <form action="" method="post">
                     <div>
                         <label>Name</label>
