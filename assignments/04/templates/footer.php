@@ -2,7 +2,6 @@
     <!-- END MAIN PAGE CONTENT -->
 
     <!-- BEGIN PAGE FOOTER -->
-     
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
@@ -13,5 +12,5 @@
     <!-- END PAGE FOOTER -->
 
 </body>
-    
+
 </html>

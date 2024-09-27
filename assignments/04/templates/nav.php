@@ -4,7 +4,7 @@
 <!-- BEGIN MAIN NAV -->
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="#">
             <span class="icon-text">
                 <span class="icon">
                     <i class="fas fa-yin-yang fa-lg"></i>
@@ -36,10 +36,10 @@
 <!-- END MAIN NAV -->
 <section class="block">&nbsp;<!--only for spacing purposes--></section>
 <!-- BEGIN HERO -->
-<section class="hero is-info">
+<section><section class="hero is-info">
     <div class="hero-body">
-        <p class="title">Hero title</p>
-        <p class="subtitle">Hero subtitle</p>
+      <p class="title">Hero title</p>
+      <p class="subtitle">Hero subtitle</p>
     </div>
 </section>
 <!-- END HERO -->
@@ -48,5 +48,4 @@
 <!-- END PAGE HEADER -->
 
 <!-- BEGIN MAIN PAGE CONTENT -->
- 
 <main class="container">
