@@ -26,7 +26,7 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="Buttons">
-                    <a class="button is-light">Contact us</a>
+                    <a class="button is-light" href="contact.php">Contact us</a>
                     <a class="button is-primary">Log in</a>
                 </div>
             </div>
