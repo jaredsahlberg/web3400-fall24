@@ -44,6 +44,14 @@
 </section>
 <!-- END HERO -->
 
+<?php if (!empty($_SESSION['messages'])) : ?>
+  <section class="notification is-warning">
+      <button class="delete"></button>
+      <?php echo implode('<br>', $_SESSION['messages']);
+            $_SESSION['messages'] = []; // Clear the user responses?>
+  </section>
+<?php endif; ?>
+
 </header>
 <!-- END PAGE HEADER -->
 
