@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     //check to see if the user exists in the database
-    $stmt = $pdo->prepare("SELECT * FROM 'users' WHERE 'email' = ?");
+    $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
     
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && $accountActivated && password_verify($password, $user['pass_hash'])) {
 
         //update the last_login dat/time stamp
-        $updateStmt = $pdo->prepare("UPDATE 'users' SET 'last_login' = NOW() WHERE 'id' = ?");
+        $updateStmt = $pdo->prepare("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?");
         $updateResults = $updateStmt->execute([$user['id']]);
 
 
