@@ -1,3 +1,40 @@
+<?php include 'config.php'; 
+
+//Check if the form was submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    //precess form elements
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    //check to see if the user exists in the database
+    $stmt = $pdo->prepare("SELECT * FROM 'users' WHERE 'email' = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+    
+    //vars used to check the activations status of the user account
+    $activation_code =$user['activation_code'];
+    $full_name = $user['full_name'];
+
+    //set the activation status for the user
+    $accountActivated = substr($activation_code, 0, 9) === 'activated' ? true : false;
+
+    //if user account exists and is activated and the password is verified then log them in
+    if ($user && $accountActivated && password_verify($password, $user['pass_hash'])) {
+
+        //update the last_login dat/time stamp
+        $updateStmt = $pdo->prepare("UPDATE 'users' SET 'last_login' = NOW() WHERE 'id' = ?");
+        $updateResults = $updateStmt->execute([$user['id']]);
+
+
+    } else {
+        # code...
+    }    
+}
+?>
+<?php include 'templates/head.php'; ?>
+<?php include 'templates/nav.php'; ?>
+
 <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Login</h1>
