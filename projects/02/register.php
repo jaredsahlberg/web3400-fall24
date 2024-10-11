@@ -23,9 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: register.php');
         exit;
     } else {
-        // Email is unique, proceed with inserting the new user record
-        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`, `activation_code`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code]);
+        //Email is unique, proceed with inserting the new user record
+        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`,`activation_code`, `user_bio`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code, $user_bio]);
+
+        // Extract, sanitize user input and assign data to variables...
+        $user_bio = htmlspecialchars($_POST['user_bio']); // Extract and sanitize user bio
 
         // Generate activation link. This is instead of sending a verification Email and or SMS message
         $activation_link = "?code=$activation_code";
@@ -139,6 +142,13 @@ if (isset($_GET['code'])) {
                     <input name="sms" type="checkbox">
                     &nbsp;Yes, please send me text messages.
                 </label>
+            </div>
+        </div>
+        <!-- Bio -->
+        <div class="field">
+            <label class="label">Bio</label>
+            <div class="control">
+                <textarea class="textarea" name="user_bio" placeholder="Tell us about yourself"></textarea>
             </div>
         </div>
         <!-- Subscribe -->
