@@ -12,7 +12,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 
 // Step 3: Prepare the SQL query template to select all users from the database
 // ex. $stmt = $pdo->prepare('SQL GOES HERE...');
-$stmt = $pdo->prepare("'SELECT * FROM 'users'");
+$stmt = $pdo->prepare("'SELECT * FROM users");
 
 // Step 4: Execute the query
 // ex. $stmt->execute();
