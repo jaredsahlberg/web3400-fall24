@@ -3,7 +3,7 @@
 //Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    //process form elements
+    //precess form elements
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_role'] = $user['role'];
         $_SESSION['messages'][] = "Welcome back, $full_name";
 
+
         //redirect the user to the profile page or admin dashboard based on their role
         if ($user['role'] === 'admin') {
             header('Location: admin_dashboard.php');
@@ -46,62 +47,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Create an activation link message
         $_SESSION['messages'][] = "Welcome $full_name. Your account has not been activated. To activate your account, <a href='$activation_link'>click here</a>.";
-        
+
+
     } else {
         //user account does not exist or password is invalid
         $_SESSION['messages'][] = "Invalid email or password. Please try again.";
         header('Location: login.php');
         exit;
+        #code
     } 
 }
-
-include 'templates/head.php';
-include 'templates/nav.php';
 ?>
+<?php include 'templates/head.php'; ?>
+<?php include 'templates/nav.php'; ?>
 
-<!-- Begin Login Dropdown Button and Form -->
-<div style="position: relative; display: inline-block; float: right; margin-right: 20px;">
-    <!-- Trigger Button -->
-    <button onclick="toggleDropdown()" style="background-color: #3273dc; color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px;">
-        Login
-    </button>
-
-    <!-- Dropdown Form (Hidden by default) -->
-    <div id="dropdownForm" style="display: none; position: absolute; right: 0; background-color: white; border: 1px solid #ddd; padding: 20px; width: 250px; top: 100%; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); border-radius: 5px;">
-        <form action="login.php" method="post">
-            <!-- Email Field -->
-            <div style="margin-bottom: 10px;">
-                <label for="email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email:</label>
-                <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+<!-- BEGIN YOUR CONTENT -->
+<section class="section">
+    <h1 class="title">Login</h1>
+    <form class="box" action="login.php" method="post">
+        <!-- Email -->
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+                <input class="input" type="email" name="email" required>
             </div>
-            <!-- Password Field -->
-            <div style="margin-bottom: 10px;">
-                <label for="password" style="display: block; margin-bottom: 5px; font-weight: bold;">Password:</label>
-                <input type="password" id="password" name="password" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <!-- Password -->
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+                <input class="input" type="password" name="password" required>
             </div>
-            <!-- Submit Button -->
-            <div>
-                <button type="submit" style="background-color: #3273dc; color: white; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold; border-radius: 5px;">
-                    Login
-                </button>
+        </div>
+        <!-- Submit Button -->
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-link">Login</button>
             </div>
-        </form>
-    </div>
-</div>
-
-<!-- JavaScript for Toggling the Dropdown -->
-<script>
-function toggleDropdown() {
-    const form = document.getElementById('dropdownForm');
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-}
-
-window.onclick = function(event) {
-    const form = document.getElementById('dropdownForm');
-    if (!event.target.matches('button') && !form.contains(event.target)) {
-        form.style.display = 'none';
-    }
-}
-</script>
+        </div>
+    </form>
+    <a href="register.php" class="is-link"><strong>Create a new user account</strong></a>
+</section>
+<!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>
