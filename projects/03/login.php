@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_role'] = $user['role'];
         $_SESSION['messages'][] = "Welcome back, $full_name";
 
-
         //redirect the user to the profile page or admin dashboard based on their role
         if ($user['role'] === 'admin') {
             header('Location: admin_dashboard.php');
