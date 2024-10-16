@@ -46,6 +46,7 @@ try {
                 <input class="input" type="text" name="full_name" value="<?= $user['full_name'] ?>" required>
             </div>
         </div>
+        
         <!-- Email -->
         <div class="field">
             <label class="label">Email</label>
@@ -67,6 +68,7 @@ try {
                 <textarea class="textarea" name="user_bio"><?= $user['user_bio'] ?></textarea>
             </div>
         </div>
+
         <!-- Submit Button -->
         <div class="field is-grouped">
             <div class="control">

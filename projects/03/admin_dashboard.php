@@ -10,15 +10,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 ?>
-
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-    <!-- BEGIN YOUR CONTENT -->
+<!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Admin Dashboard</h1>
     <p>Admin dashboard content will be created in a future project...</p>
 </section>
-    <!-- END YOUR CONTENT -->
+<!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>

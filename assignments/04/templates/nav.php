@@ -25,8 +25,8 @@
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
-                <div class="Buttons">
-                    <a class="button is-light" href="contact.php">Contact us</a>
+                <div class="buttons">
+                    <a class="button is-light">Contact us</a>
                     <a class="button is-primary">Log in</a>
                 </div>
             </div>
@@ -36,21 +36,13 @@
 <!-- END MAIN NAV -->
 <section class="block">&nbsp;<!--only for spacing purposes--></section>
 <!-- BEGIN HERO -->
-<section><section class="hero is-info">
+<section class="hero is-info">
     <div class="hero-body">
       <p class="title">Hero title</p>
       <p class="subtitle">Hero subtitle</p>
     </div>
-</section>
-<!-- END HERO -->
-
-<?php if (!empty($_SESSION['messages'])) : ?>
-  <section class="notification is-warning">
-      <button class="delete"></button>
-      <?php echo implode('<br>', $_SESSION['messages']);
-            $_SESSION['messages'] = []; // Clear the user responses?>
   </section>
-<?php endif; ?>
+<!-- END HERO -->
 
 </header>
 <!-- END PAGE HEADER -->

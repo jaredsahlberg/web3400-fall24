@@ -1,6 +1,6 @@
-<?php
+<?php 
 // Step 1: Include config.php file
-include 'config.php';
+include 'config.php'; 
 
 // Step 2: Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
@@ -10,48 +10,46 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
-/* Step 3: You can use your completed `register.php` page as a guide for this page. 
-However, you must remove the unused fields from the form handler and add a handler 
-for the user role field; if the email already exists, redirect back to `user_add.php`, 
-displaying the message "That email already exists. Please choose another." You must 
-also update the SQL INSERT statement, and when the record is successfully created, 
-redirect back to the `users_manage.php` page with the message "The user account 
-for $full_name was created. They will need to login to activate their account."
+
+/* Step 3: You can use your completed `register.php` page as a guide for this page. However, you must remove the unused fields from the form handler and add a handler for the user role field; if the email already exists, redirect back to `user_add.php`, displaying the message "That email already exists. Please choose another." You must also update the SQL INSERT statement, and when the record is successfully created, redirect back to the `users_manage.php` page with the message "The user account for $full_name was created. They will need to login to activate their account."
 */
-// Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Extract, sanitize user input, and assign data to variables
     $full_name = htmlspecialchars($_POST['full_name']);
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt password
     $phone = htmlspecialchars($_POST['phone']);
     $role = htmlspecialchars($_POST['role']);
+    $activation_code = uniqid(); // Generate a unique id
+
     // Check if the email is unique
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
     $stmt->execute([$email]);
     $userExists = $stmt->fetch();
 
     if ($userExists) {
-        // Email already exists, redirect back to user_add.php with a message
+        // Email already exists, prompt the user to choose another
         $_SESSION['messages'][] = "That email already exists. Please choose another.";
         header('Location: user_add.php');
         exit;
     } else {
         // Email is unique, proceed with inserting the new user record
-        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `role`) VALUES (?, ?, ?, ?, ?)");
-        $insertStmt->execute([$full_name, $email, $password, $phone, $role]);
+        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `role`, `activation_code`) VALUES (?, ?, ?, ?, ?, ?)");
+        $insertStmt->execute([$full_name, $email, $password, $phone, $role, $activation_code]);
 
-        // Redirect on success to users_manage.php with a success message
+        // Create successful user creation message
         $_SESSION['messages'][] = "The user account for $full_name was created. They will need to login to activate their account.";
         header('Location: users_manage.php');
         exit;
     }
 }
+
+
 ?>
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-<!-- BEGIN YOUR CONTENT -->
+    <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Add User</h1>
     <form action="user_add.php" method="post">

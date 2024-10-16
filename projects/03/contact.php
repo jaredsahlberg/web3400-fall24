@@ -16,12 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 ?>
-
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-    <!-- BEGIN YOUR CONTENT -->
-     
+<!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Contact Us</h1>
     <form class="box" action="contact.php" method="post">
@@ -65,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <span><?= $contactPhone ?></span>
     </a>
 </section>
+<!-- END YOUR CONTENT -->
 
-    <!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>

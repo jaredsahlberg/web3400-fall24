@@ -4,7 +4,6 @@
 $siteName = "My PHP Site";
 $contactEmail = "contact@example.com";
 $contactPhone = "123-456-7890";
-
 // Create the connection to your web3400 database
 try {
     // Database connection variables

@@ -1,5 +1,5 @@
 <?php
- include 'config.php';
+include 'config.php';
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // Email is unique, proceed with inserting the new user record
-        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`, `activation_code`) 
-                                    VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`, `activation_code`) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code]);
 
         // Generate activation link. This is instead of sending a verification Email and or SMS message
@@ -74,7 +73,7 @@ if (isset($_GET['code'])) {
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-    <!-- BEGIN YOUR CONTENT -->
+<!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Create a user account</h1>
     <form class="box" action="register.php" method="post">
@@ -135,7 +134,7 @@ if (isset($_GET['code'])) {
         </div>
     </form>
 </section>
+<!-- END YOUR CONTENT -->
 
-    <!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>

@@ -1,6 +1,7 @@
-<?php
+<?php 
+
 // Step 1: Include config.php file
-include 'config.php';
+include 'config.php'; 
 
 // Step 2: Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
@@ -10,49 +11,39 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
-/* Step 3: Check if the update form was submitted. If so, update user details. 
-Similar steps as in user_add.php but with an UPDATE SQL query */
+// Step 3: Check if the update form was submitted. If so, update user details. Similar steps as in user_add.php but with an UPDATE SQL query
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        // Retrieve form data
-        $full_name = $_POST['full_name'];
-        $phone = $_POST['phone'];
+    // Extract, sanitize user input, and assign data to variables
+    $full_name = htmlspecialchars($_POST['full_name']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $role = htmlspecialchars($_POST['role']);
 
-        // Update user record in the database
-        $stmt = $pdo->prepare("UPDATE `users` SET `full_name` = ?, `phone` = ?WHERE `id` = ?");
-        $stmt->execute([$full_name, $phone, $_SESSION['user_id']]);
-
-        // Redirect user to profile page after successful update
-        header('Location: users_manage.php');
-        exit;
-    } catch (PDOException $e) {
-        // Handle any database errors (optional)
-        die("Database error occurred: " . $e->getMessage());
-    }
+    // Update user records
+    $insertStmt = $pdo->prepare("UPDATE `users` SET `full_name`=?,`phone`=?, `role`=? WHERE `id` = ?");
+    $insertStmt->execute([$full_name, $phone, $role, $_POST['id']]);
 }
 
-/* Step 4: Else it's an initial page request, fetch the user's current data from 
-the database by preparing and executing a SQL statement that uses the user gets 
-the user id from the query string (ex. $_GET['id'])*/
-try {
-    // Get user info from the database
-    $id = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
-    $id->execute([$_SESSION['user_id']]);
-    $user = $id->fetch();
-} catch (PDOException $e) {
-    // Handle any database errors (optional)
-    die("Database error occurred: " . $e->getMessage());
+// Step 4: Else it's an initial page request, fetch the user's current data from the database by preparing and executing a SQL statement that gets the user id from the query string (ex. $_GET['id'])
+if (isset($_GET['id'])) {
+    $user_id = $_GET['id'];
+
+     // Prepare and execute the SELECT query to fetch the user data
+     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
+     $stmt->execute([$user_id]);
+     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+// Step 4: Else it's an initial page request, fetch the user's current data from the database by preparing and executing a SQL statement that uses the user gets the user id from the query string (ex. $_GET['id'])
 ?>
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-<!-- BEGIN YOUR CONTENT -->
+    <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Edit User</h1>
     <form action="" method="post">
+        
         <!-- ID -->
         <input type="hidden" name="id" value="<?= $user['id'] ?>">
         <!-- Full Name -->
@@ -83,6 +74,7 @@ try {
                 <input class="input" type="tel" value="<?= $user['phone'] ?>" name="phone">
             </div>
         </div>
+
         <!-- Bio -->
         <div class="field">
             <label class="label">User Bio</label>
@@ -115,5 +107,6 @@ try {
     </form>
 </section>
 <!-- END YOUR CONTENT -->
+
 
 <?php include 'templates/footer.php'; ?>
