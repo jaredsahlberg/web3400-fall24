@@ -1,67 +1,64 @@
 <?php include 'config.php'; 
 
-//Check if the form was submitted
+// Check if the form was submitted
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    //precess form elements
+    // process form elements
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    //check to see if the user exists in the database
+    // check to see if the user exists in the database
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
-    
-    //vars used to check the activations status of the user account
-    $activation_code =$user['activation_code'];
+
+    // variables used to check the activations status of the user account
+    $activation_code = $user['activation_code'];
     $full_name = $user['full_name'];
 
-    //set the activation status for the user
-    $accountActivated = substr($activation_code, 0, 9) === 'activated' ? true : false;
+    // set the activation status for the user
+    $accountActivaded = substr($activation_code, 0, 9) === 'activated' ? true: false;
 
-    //if user account exists and is activated and the password is verified then log them in
-    if ($user && $accountActivated && password_verify($password, $user['pass_hash'])) {
-
-        //update the last_login dat/time stamp
+    // if user account exists and is activated and the password is verified then log them in
+    if($user && $accountActivaded && password_verify($password, $user['pass_hash'])) {
+        
+        // Update the last_login dat/time stamp
         $updateStmt = $pdo->prepare("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?");
         $updateResults = $updateStmt->execute([$user['id']]);
 
-        //set session vars for the user session
+        // set session vars for the user session
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_role'] = $user['role'];
         $_SESSION['messages'][] = "Welcome back, $full_name";
 
-
-        //redirect the user to the profile page or admin dashboard based on their role
-        if ($user['role'] === 'admin') {
-            header('Location: admin_dashboard.php');
+        // redirect the user to the profile page or admin dashboard based on their role
+        if ($user['role'] == 'admin') {
+            header('location: admin_dashboard.php');
         } else {
-            header('Location: profile.php');
+            header('location: profile.php');
         }
         exit;
-
-    } elseif ($user && !$accountActivated) {
+    } elseif ($user && !$accountActivaded) {
         // Generate activation link. This is instead of sending a verification Email and or SMS message
-        $activation_link = "register.php?code=$activation_code";
+        $activation_link = "?code=$activation_code";
 
         // Create an activation link message
         $_SESSION['messages'][] = "Welcome $full_name. Your account has not been activated. To activate your account, <a href='$activation_link'>click here</a>.";
 
-
     } else {
-        //user account does not exist or password is invalid
-        $_SESSION['messages'][] = "Invalid email or password. Please try again.";
-        header('Location: login.php');
+        // user account does not exist or the password is invalid
+        $_SESSION['messages'] [] = "Invalid email or password. Please try again.";
+        header("Location: login.php");
         exit;
-        #code
-    } 
+    }
 }
 ?>
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-<!-- BEGIN YOUR CONTENT -->
+    <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Login</h1>
     <form class="box" action="login.php" method="post">
@@ -88,6 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
     <a href="register.php" class="is-link"><strong>Create a new user account</strong></a>
 </section>
-<!-- END YOUR CONTENT -->
+    <!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>

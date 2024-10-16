@@ -10,24 +10,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
-/* Step 3: You can use your completed `register.php` page as a guide for this page. However, you must remove the unused fields from the form handler and add a handler for the user role field; if the email already exists, redirect back to `user_add.php`, displaying the message "That email already exists. Please choose another." You must also update the SQL INSERT statement, and when the record is successfully created, redirect back to the `users_manage.php` page with the message "The user account for $full_name was created. They will need to login to activate their account."
+/* Step 3: You can use your completed `register.php` page as a guide for this page. 
+However, you must remove the unused fields from the form handler and add a handler 
+for the user role field; if the email already exists, redirect back to `user_add.php`, 
+displaying the message "That email already exists. Please choose another." You must 
+also update the SQL INSERT statement, and when the record is successfully created, 
+redirect back to the `users_manage.php` page with the message "The user account 
+for $full_name was created. They will need to login to activate their account."
 */
+// Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Extract, sanitize user input, and assign data to variables
     $full_name = htmlspecialchars($_POST['full_name']);
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encrypt password
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
     $phone = htmlspecialchars($_POST['phone']);
     $role = htmlspecialchars($_POST['role']);
-    $activation_code = uniqid(); // Generate a unique id
-    
     // Check if the email is unique
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
     $stmt->execute([$email]);
     $userExists = $stmt->fetch();
 
     if ($userExists) {
-        // Email already exists, prompt the user to choose another
+        // Email already exists, redirect back to user_add.php with a message
         $_SESSION['messages'][] = "That email already exists. Please choose another.";
         header('Location: user_add.php');
         exit;
@@ -36,14 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `role`) VALUES (?, ?, ?, ?, ?)");
         $insertStmt->execute([$full_name, $email, $password, $phone, $role]);
 
-        // Create successful user creation message
+        // Redirect on success to users_manage.php with a success message
         $_SESSION['messages'][] = "The user account for $full_name was created. They will need to login to activate their account.";
         header('Location: users_manage.php');
         exit;
     }
 }
 ?>
-
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
@@ -104,5 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </section>
 <!-- END YOUR CONTENT -->
+
 
 <?php include 'templates/footer.php'; ?>

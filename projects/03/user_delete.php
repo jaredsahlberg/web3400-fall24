@@ -10,34 +10,45 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
-// Step 3: Check if the $_GET['id'] exists; if it does, get the user the record from the database and store it in the associative array $user. If a user record with that ID does not exist, display the message "A user with that ID did not exist."
+/* Step 3: Check if the $_GET['id'] exists; if it does, get the user the record from 
+the database and store it in the associative array $user. If a user record with that 
+ID does not exist, display the message "A user with that ID did not exist."*/
 if (isset($_GET['id'])) {
-    $user_id = $_GET['id'];
+    $id = $_GET['id'];
 
-    // Prepare and execute a query to fetch the user by id
-    $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
-    $stmt->execute([$user_id]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Fetch the user from the database
+    $fetchStmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
+    $fetchStmt->execute([$id]);
+    $user = $fetchStmt->fetch();
 
-    // If no user is found, show the error
+    // If no user exists with that ID, display an error message
     if (!$user) {
         $_SESSION['messages'][] = "A user with that ID did not exist.";
+        header('Location: users_manage.php');
+        exit;
     }
-
+} else {
+    // If no ID is provided, redirect back to the users management page
+    $_SESSION['messages'][] = "No user ID was provided.";
+    header('Location: users_manage.php');
+    exit;
 }
 
-// Step 4: Check if $_GET['confirm'] == 'yes'. This means they clicked the 'yes' button to confirm the removal of the record. Prepare and execute a SQL DELETE statement where the user id == the $_GET['id']. Else (meaning they clicked 'no'), return them to the users_manage.php page.
+/* Step 4: Check if $_GET['confirm'] == 'yes'. This means they clicked the 'yes' button 
+to confirm the removal of the record. Prepare and execute a SQL DELETE statement where 
+the user id == the $_GET['id']. Else (meaning they clicked 'no'), return them to the 
+users_manage.php page.*/
 if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
-    // Prepare and execute the DELETE statement
+    // They confirmed the deletion; prepare and execute a DELETE SQL statement
     $deleteStmt = $pdo->prepare("DELETE FROM `users` WHERE `id` = ?");
-    $deleteStmt->execute([$user_id]);
+    $deleteStmt->execute([$id]);
 
-    // Set a success message and redirect to the manage users page
-    $_SESSION['messages'][] = "User account for {$user['full_name']} has been deleted.";
+    // Redirect back to the users_manage.php page with a success message
+    $_SESSION['messages'][] = "User {$user['full_name']} has been successfully deleted.";
     header('Location: users_manage.php');
     exit;
 } elseif (isset($_GET['confirm']) && $_GET['confirm'] === 'no') {
-    // Redirect back to the manage users page if they clicked "No"
+    // They declined the deletion, so redirect back to the users_manage.php page
     header('Location: users_manage.php');
     exit;
 }

@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+ include 'config.php';
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // Email is unique, proceed with inserting the new user record
-        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`, `activation_code`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`, `activation_code`) 
+                                    VALUES (?, ?, ?, ?, ?, ?, ?)");
         $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code]);
 
         // Generate activation link. This is instead of sending a verification Email and or SMS message
@@ -69,38 +70,11 @@ if (isset($_GET['code'])) {
     }
 }
 ?>
+
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-<!-- BEGIN YOUR CONTENT -->
-<section class="section">
-    <h1 class="title">Login</h1>
-    <form class="box" action="login.php" method="post">
-        <!-- Email -->
-        <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-                <input class="input" type="email" name="email" required>
-            </div>
-        </div>
-        <!-- Password -->
-        <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-                <input class="input" type="password" name="password" required>
-            </div>
-        </div>
-        <!-- Submit Button -->
-        <div class="field">
-            <div class="control">
-                <button type="submit" class="button is-link">Login</button>
-            </div>
-        </div>
-    </form>
-    <a href="register.php" class="is-link"><strong>Create a new user account</strong></a>
-</section>
-<!-- END YOUR CONTENT -->
-<!-- BEGIN YOUR CONTENT -->
+    <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Create a user account</h1>
     <form class="box" action="register.php" method="post">
@@ -161,4 +135,7 @@ if (isset($_GET['code'])) {
         </div>
     </form>
 </section>
-<!-- END YOUR CONTENT -->
+
+    <!-- END YOUR CONTENT -->
+
+<?php include 'templates/footer.php'; ?>

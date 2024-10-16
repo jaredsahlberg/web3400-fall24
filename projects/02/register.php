@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+ include 'config.php';
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,12 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sms = $_POST['sms'] == 'on' ? 1 : 0;
     $subscribe = $_POST['subscribe'] == 'on' ? 1 : 0;
     $activation_code = uniqid(); // Generate a unique id
-    $user_bio = htmlspecialchars($_POST['user_bio']); // Extract and Sanitize user bio
-
+    $user_bio = htmlspecialchars($_POST['user_bio']); // Extract and sanitize user bio
     // Check if the email is unique
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ?");
     $stmt->execute([$email]);
     $userExists = $stmt->fetch();
+
+    //Email is unique, proceed with inserting the new user record
+    $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`,`activation_code`, `user_bio`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code, $user_bio]);
 
     if ($userExists) {
         // Email already exists, prompt the user to choose another
@@ -24,9 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: register.php');
         exit;
     } else {
-        //Email is unique, proceed with inserting the new user record
-        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`,`activation_code`, `user_bio`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code, $user_bio]);
+        // Email is unique, proceed with inserting the new user record
+        $insertStmt = $pdo->prepare("INSERT INTO `users`(`full_name`, `email`, `pass_hash`, `phone`, `sms`, `subscribe`, `activation_code`) 
+                                    VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $insertStmt->execute([$full_name, $email, $password, $phone, $sms, $subscribe, $activation_code]);
 
         // Generate activation link. This is instead of sending a verification Email and or SMS message
         $activation_link = "?code=$activation_code";
@@ -70,38 +74,11 @@ if (isset($_GET['code'])) {
     }
 }
 ?>
+
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
 
-<!-- BEGIN YOUR CONTENT -->
-<section class="section">
-    <h1 class="title">Login</h1>
-    <form class="box" action="login.php" method="post">
-        <!-- Email -->
-        <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-                <input class="input" type="email" name="email" required>
-            </div>
-        </div>
-        <!-- Password -->
-        <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-                <input class="input" type="password" name="password" required>
-            </div>
-        </div>
-        <!-- Submit Button -->
-        <div class="field">
-            <div class="control">
-                <button type="submit" class="button is-link">Login</button>
-            </div>
-        </div>
-    </form>
-    <a href="register.php" class="is-link"><strong>Create a new user account</strong></a>
-</section>
-<!-- END YOUR CONTENT -->
-<!-- BEGIN YOUR CONTENT -->
+    <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Create a user account</h1>
     <form class="box" action="register.php" method="post">
@@ -142,13 +119,6 @@ if (isset($_GET['code'])) {
                 </label>
             </div>
         </div>
-        <!-- Bio -->
-        <div class="field">
-            <label class="label">Bio</label>
-            <div class="control">
-                <textarea class="textarea" name="user_bio" placeholder="Tell us about yourself"></textarea>
-            </div>
-        </div>
         <!-- Subscribe -->
         <div class="field">
             <div class="control">
@@ -167,6 +137,16 @@ if (isset($_GET['code'])) {
                 <button type="reset" class="button is-link is-light">Reset</button>
             </div>
         </div>
+         <!-- Bio -->
+        <div class="field">
+            <label class="label">Bio</label>
+            <div class="control">
+                <textarea class="textarea" name="user_bio" placeholder="Tell us about yourself"></textarea>
+            </div>
+        </div>
     </form>
 </section>
-<!-- END YOUR CONTENT -->
+
+    <!-- END YOUR CONTENT -->
+
+<?php include 'templates/footer.php'; ?>
