@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateResults = $updateStmt->execute([$user['id']]);
 
         //set session vars for the user session
-        $_SESSION['logged_in'] = true;
+        $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_role'] = $user['role'];
         $_SESSION['messages'][] = "Welcome back, $full_name";
