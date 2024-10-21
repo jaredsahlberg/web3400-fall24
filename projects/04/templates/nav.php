@@ -23,6 +23,7 @@
         <div class="navbar-start">
             <a class="navbar-item" href="#">Home</a>
             <a class="navbar-item" href="#">About</a>
+
             <!-- BEGIN ADMIN MENU -->
             <?php if (isset($_SESSION['loggedin']) && $_SESSION['user_role'] == 'admin') : ?>
                 <div class="navbar-item has-dropdown is-hoverable">
@@ -35,6 +36,9 @@
                     <div class="navbar-dropdown">
                         <a href="users_manage.php" class="navbar-item">
                             Manage Users
+                        </a>
+                        <a href="articles_manage.php" class="navbar-item">
+                            Manage Articles
                         </a>
                     </div>
                 </div>
@@ -70,19 +74,27 @@
     </div>
 </nav>
 <!-- END MAIN NAV -->
+
 <section class="block">&nbsp;<!--only for spacing purposes--></section>
+
 <?php if ($_SERVER['PHP_SELF'] == '/index.php') : ?>
   <!-- BEGIN HERO -->
-  <section class="hero is-link">
-      <div class="hero-body">
-          <p class="title">
-              Hero title
-          </p>
-          <p class="subtitle">
-              Hero subtitle
-          </p>
-      </div>
-  </section>
+    <section class="hero is-info">
+        <div class="hero-body">
+        <p class="title">
+            Your hook goes here
+        </p>
+        <p class="subtitle">
+            Your catchy subtitle goes here...
+        </p>
+        <a href="contact.php" class="button is-medium is-info is-light is-rounded">
+            <span class="icon is-large">
+            <i class="fab fa-2x fa-pagelines"></i>
+            </span>
+            <span>Your call to action goes here</span>
+        </a>
+        </div>
+    </section>
   <!-- END HERO -->
 <?php endif; ?>
 

@@ -32,4 +32,5 @@ if (!isset($_SESSION['messages'])) {
 }
 // How to add a message to the array
 // $_SESSION['messages'][] = "Message goes here";
+
 ?>
