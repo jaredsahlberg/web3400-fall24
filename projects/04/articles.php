@@ -1,25 +1,79 @@
-<?php
-// Step 1: Include config.php file
+<?php include 'config.php'; ?>
+<?php include 'templates/head.php'; ?>
+<?php include 'templates/nav.php'; ?>
 
-// Step 2: Secure and only allow 'admin' users to access this page
+<?php 
 
+if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
+    // Redirect user to login page or display an error message
+    $_SESSION['messages'][] = "You must be an administrator to access that resource.";
+    header('Location: login.php');
+    exit;
+}
 // Step 3: Prepare the SQL query template to select all posts from the database
-// ex. $stmt = $pdo->prepare('SELECT articles.*, users.full_name AS author FROM articles JOIN users ON articles.author_id = users.id ORDER BY `created_at` DESC');
+$stmt = $pdo->prepare('SELECT articles.*, users.full_name AS author 
+                        FROM articles 
+                        JOIN users ON articles.author_id = users.id 
+                        ORDER BY `created_at` DESC');
 
 // Step 4: Execute the query
-// ex. $stmt->execute();
+$stmt->execute();
 
 // Step 5: Fetch and store the results in the $articles associative array
-// ex. $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Step 6: Check if the query returned any rows. If not, display the message: "There are no articles in the database."
-// ex. if (!$articles) {...}
+if (!$articles) {
+     $_SESSION['messages'][] = "here are no articles in the database.";
+}
 
-// Step 7: If the 'is_published' control is clicked, toggle the status from 0 -> 1 for published or 1 -> 0 for unpublished
+// Step 7: If the 'is_published' control is clicked, toggle the status
+if (isset($_GET['id']) && isset($_GET['is_published'])) {
+    $articleId = $_GET['id'];
+    // Toggle featured status
+    $currentPublished = $_GET['is_published'] == '1' ? 1 : 0;
+    $ispublished = $currentPublished == 1 ? 0 : 1; // Toggle logic
 
-// Step 8: If the 'is_featured' control is clicked, toggle the status from 0 -> 1 for featured or 1 -> 0 for unfeatured
+    // Prepare the SQL statement to update the featured status
+    $updateStmt = $pdo->prepare('UPDATE articles SET is_published = :is_published WHERE id = :id');
+    $updateStmt->execute(['is_published' => $ispublished, 'id' => $articleId]);
+
+    // Set a message based on the action taken
+    if ($ispublished) {
+        $_SESSION['messages'][] = "The article has been published.";
+    } else {
+        $_SESSION['messages'][] = "The article has been un_published.";
+    }
+
+    // Redirect back to articles.php to avoid form resubmission
+    echo '<meta http-equiv="refresh" content="0;url=articles.php">';
+    exit;
+}
+
+// Step 8: If the 'is_featured' control is clicked, toggle the status
+if (isset($_GET['id']) && isset($_GET['is_featured'])) {
+    $articleId = $_GET['id'];
+    // Toggle featured status
+    $currentFeatured = $_GET['is_featured'] == '1' ? 1 : 0;
+    $isFeatured = $currentFeatured == 1 ? 0 : 1; // Toggle logic
+
+    // Prepare the SQL statement to update the featured status
+    $updateStmt = $pdo->prepare('UPDATE articles SET is_featured = :is_featured WHERE id = :id');
+    $updateStmt->execute(['is_featured' => $isFeatured, 'id' => $articleId]);
+
+    // Set a message based on the action taken
+    if ($isFeatured) {
+        $_SESSION['messages'][] = "The article has been featured.";
+    } else {
+        $_SESSION['messages'][] = "The article has been un_featured.";
+    }
+
+    // Redirect back to articles.php to avoid form resubmission
+    echo '<meta http-equiv="refresh" content="0;url=articles.php">';
+    exit;
+}
+
 ?>
-
 <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Articles</h1>
@@ -39,6 +93,7 @@
             </tr>
         </thead>
         <tbody>
+
             <!-- Fetch Posts from Database and Populate Table Rows Dynamically -->
             <?php foreach ($articles as $article) : ?>
                 <tr>
@@ -81,4 +136,5 @@
         </tbody>
     </table>
 </section>
+
 <!-- END YOUR CONTENT -->

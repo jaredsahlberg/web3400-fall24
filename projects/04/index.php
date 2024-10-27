@@ -1,16 +1,12 @@
 <?php
 // Include config.php file
 include 'config.php';
-
 // Prepare the SQL query to select all articles from the database that are published and sort them in reverse chronological order (DESC)
 $stmt = $pdo->prepare('SELECT articles.*, users.full_name AS author FROM articles JOIN users ON articles.author_id = users.id WHERE is_published = 1 AND is_featured = 1 ORDER BY articles.created_at DESC LIMIT 10');
-
 // Execute the query
 $stmt->execute();
-
 // Fetch and store the results in the $articles associative array
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 // Check if the query returned any rows. If not, display a message.
 if (!$articles) {
     $_SESSION['messages'][] = "There are no articles in the database.";
@@ -20,7 +16,6 @@ if (!$articles) {
 include 'templates/head.php';
 include 'templates/nav.php';
 ?>
-
     <!-- BEGIN YOUR CONTENT -->
     <section class="section">
         <h1 class="title">Featured Articles</h1>
@@ -30,7 +25,7 @@ include 'templates/nav.php';
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-128x128">
-                            <img class="is-rounded" src="https://source.unsplash.com/random/128x128/?sig=<?= $article['id'] ?>&wellness">
+                        <img class="is-rounded" src="https://picsum.photos/128<?= $article['id'] ?>">
                         </p>
                     </figure>
                     <div class="media-content">
@@ -48,6 +43,7 @@ include 'templates/nav.php';
                                 </small>
                             </p>
                         </div>
+                        
                         <p class="buttons">
                             <a class="button is-small is-rounded">
                                 <span class="icon is-small">
@@ -75,5 +71,4 @@ include 'templates/nav.php';
         </div>
     </section>
     <!-- END YOUR CONTENT -->
-
 <?php include 'templates/footer.php'; ?>

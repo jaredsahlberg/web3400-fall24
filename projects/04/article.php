@@ -1,10 +1,24 @@
-<?php
-// Step 1: Include config.php file
+<?php include 'config.php'; ?>
+<?php include 'templates/head.php'; ?>
+<?php include 'templates/nav.php'; ?>
 
-// Step 2: Check if the $_GET['id'] exists; if it does, get the article record from the database and store it in the associative array named $article.
-// SQL example: SELECT articles.*, users.full_name AS author FROM articles JOIN users ON articles.author_id = users.id WHERE is_published = 1 AND articles.id = ?
-
-// Step 3: If an article with that ID does not exist, display the message "An article with that ID did not exist."
+<?php 
+   if (isset($_GET['id'])) {
+    // Prepare the SQL query to fetch the article based on the provided ID
+    $stmt = $pdo->prepare('SELECT articles.*, users.full_name AS author FROM articles JOIN users ON articles.author_id = users.id WHERE is_published = 1 AND articles.id = ?');
+        // Execute the query with the article ID
+    $stmt->execute([$_GET['id']]);
+        // Fetch the article as an associative array
+    $article = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Step 3: If an article with that ID does not exist, display an error message
+    if (!$article) {
+        echo "An article with that ID did not exist.";
+        exit; // Stop further execution if no article is found
+    }
+} else {
+    echo "No article ID provided.";
+    exit; // Stop further execution if no ID is provided
+}
 ?>
 <!-- BEGIN YOUR CONTENT -->
 <section class="section">
@@ -13,7 +27,7 @@
         <article class="media">
             <figure class="media-left">
                 <p class="image is-128x128">
-                    <img src="https://source.unsplash.com/random/128x128/?wellness">
+                    <img src="https://picsum.photos/128">
                 </p>
             </figure>
             <div class="media-content">
@@ -62,4 +76,6 @@
         </article>
     </div>
 </section>
+<?php include 'templates/footer.php'; ?>
+
 <!-- END YOUR CONTENT -->

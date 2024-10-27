@@ -1,9 +1,10 @@
 <?php
 
 // Site Variables
-$siteName = "My PHP Site";
+$siteName = "Finding balance";
 $contactEmail = "contact@example.com";
 $contactPhone = "123-456-7890";
+
 // Create the connection to your web3400 database
 try {
     // Database connection variables
@@ -62,5 +63,4 @@ function time_ago($datetime)
         return $years == 1 ? "one year ago" : "$years years ago";
     }
 }
-
 ?>
