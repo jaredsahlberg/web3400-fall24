@@ -12,11 +12,11 @@
     $article = $stmt->fetch(PDO::FETCH_ASSOC);
     // Step 3: If an article with that ID does not exist, display an error message
     if (!$article) {
-        echo "An article with that ID did not exist.";
+        
         exit; // Stop further execution if no article is found
     }
 } else {
-    echo "No article ID provided.";
+    
     exit; // Stop further execution if no ID is provided
 }
 ?>
@@ -27,7 +27,7 @@
         <article class="media">
             <figure class="media-left">
                 <p class="image is-128x128">
-                    <img src="https://picsum.photos/128">
+                    <img src="https://picsum.photos/128?random=<?= $article['id'] ?>">
                 </p>
             </figure>
             <div class="media-content">
