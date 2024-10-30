@@ -43,27 +43,28 @@ include 'templates/nav.php';
                                 </small>
                             </p>
                         </div>
-                        
+                    
                         <p class="buttons">
-                            <a class="button is-small is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-thumbs-up"></i>
-                                </span>
-                                <span><?= $article['likes_count'] ?></span>
-                            </a>
-                            <a class="button is-small is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span><?= $article['favs_count'] ?></span>
-                            </a>
-                            <a class="button is-small is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-comment"></i>
-                                </span>
-                                <span><?= $article['comments_count'] ?></span>
-                            </a>
+                        <a class="button is-small is-rounded is-static">
+                            <span class="icon is-small">
+                            <i class="fas fa-thumbs-up"></i>
+                            </span>
+                            <span><?= $article['likes_count'] ?></span>
+                        </a>
+                        <a class="button is-small is-rounded is-static">
+                            <span class="icon is-small">
+                            <i class="fas fa-star"></i>
+                            </span>
+                            <span><?= $article['favs_count'] ?></span>
+                        </a>
+                        <a class="button is-small is-rounded is-static">
+                            <span class="icon is-small">
+                            <i class="fas fa-comment"></i>
+                            </span>
+                            <span><?= $article['comments_count'] ?></span>
+                        </a>
                         </p>
+                    
                     </div>
                 </article>
             </div>

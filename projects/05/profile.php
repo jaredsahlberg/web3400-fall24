@@ -63,6 +63,30 @@ try {
         </footer>
     </div>
 </section>
+<!-- My interactions section -->
+<section class="section">
+  <h2 class="title is-4">My Interactions</h2>
+  <?php foreach ($interactions as $interaction) : ?>
+  <div class="box">
+    <article class="media">
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong><?= ucfirst($interaction['interaction_type']) ?>:</strong>
+            <?php if ($interaction['interaction_type'] === 'comment') : ?>
+            <a href="article.php?id=<?= $interaction['article_id'] ?>"><?= $interaction['article_title'] ?></a>
+            <?php else : ?>
+            <a href="article.php?id=<?= $interaction['article_id'] ?>"><?= $interaction['article_title'] ?></a>
+            <?php endif; ?>
+            <br>
+            <small><?= time_ago($interaction['created_at']) ?></small>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+  <?php endforeach; ?>
+</section>
 <!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>
