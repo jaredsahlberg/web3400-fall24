@@ -18,7 +18,6 @@ function get_gravatar($email, $s = 128, $d = 'mp', $r = 'g', $img = false, $atts
     }
     return $url;
 }
-
 try {
     // Get user info from the database
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
@@ -34,7 +33,6 @@ try {
     // Handle any database errors (optional)
     die("Database error occurred: " . $e->getMessage());
 }
-
 ?>
 <?php include 'templates/head.php'; ?>
 <?php include 'templates/nav.php'; ?>
@@ -95,6 +93,6 @@ try {
   <?php endforeach; ?>
 </section>
 
-<!-- END YOUR CONTENT -->
 
+<!-- END YOUR CONTENT -->
 <?php include 'templates/footer.php'; ?>
