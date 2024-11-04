@@ -24,6 +24,12 @@ try {
     $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch();
+
+    // Fetch user interactions along with article titles
+    $stmt = $pdo->prepare('SELECT user_interactions.*, articles.title AS article_title FROM user_interactions JOIN articles ON user_interactions.article_id = articles.id WHERE user_id = ? ORDER BY user_interactions.created_at DESC');
+    $stmt->execute([$_SESSION['user_id']]);
+    $interactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
 } catch (PDOException $e) {
     // Handle any database errors (optional)
     die("Database error occurred: " . $e->getMessage());
@@ -45,7 +51,7 @@ try {
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title"><?= $user['full_name'] ?> <span class="tag is-info is-medium"><?= $user['role'] ?></span></p>
+                    <p class="title"><?= $user['full_name'] ?> | <span class="tag is-info is-medium"><?= $user['role'] ?></span></p>
                     <p class="subtitle"><?= $user['email'] ?></p>
                     <p class="subtitle"><?= $user['phone'] ?></p>
                 </div>
@@ -63,6 +69,7 @@ try {
         </footer>
     </div>
 </section>
+
 <!-- My interactions section -->
 <section class="section">
   <h2 class="title is-4">My Interactions</h2>
@@ -87,6 +94,7 @@ try {
   </div>
   <?php endforeach; ?>
 </section>
+
 <!-- END YOUR CONTENT -->
 
 <?php include 'templates/footer.php'; ?>

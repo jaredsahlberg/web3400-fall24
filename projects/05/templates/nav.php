@@ -81,10 +81,10 @@
   <section class="hero is-info">
     <div class="hero-body">
       <p class="title">
-        Your hook goes here
+        "Dolphins are more than just a mammals"
       </p>
       <p class="subtitle">
-        Your catchy subtitle goes here...
+        They are a southern Florida mascot...
       </p>
       <a href="contact.php" class="button is-medium is-info is-light is-rounded">
         <span class="icon is-large">

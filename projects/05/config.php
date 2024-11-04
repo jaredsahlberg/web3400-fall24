@@ -1,7 +1,7 @@
 <?php
 
 // Site Variables
-$siteName = "Finding balance";
+$siteName = "Dolphins are the best";
 $contactEmail = "contact@example.com";
 $contactPhone = "123-456-7890";
 
