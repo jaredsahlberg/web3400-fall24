@@ -2,8 +2,13 @@
 // Include the configuration file to access the database and start the session
 include 'config.php';
 
+// Start the session if it's not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Secure and only allow 'admin' users to access this page
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['loggedin']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php"); // Redirect to login page if not an admin
     exit();
 }
@@ -21,13 +26,9 @@ $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Check if the query returned any rows
 if (empty($tickets)) {
     echo "There are no tickets in the database.";
-} else {
-    // Tickets exist, so proceed with displaying them in HTML
-    foreach ($tickets as $ticket) {
-        // Code to display each ticket goes here
-    }
 }
 ?>
+
 <!-- BEGIN YOUR CONTENT -->
 <section class="section">
     <h1 class="title">Manage Tickets</h1>
@@ -35,16 +36,16 @@ if (empty($tickets)) {
     <div class="buttons">
         <a href="ticket_create.php" class="button is-link">Create a new ticket</a>
     </div>
-    <div class="row columns is-multiline">
+    <div class="columns is-multiline">
         <?php foreach ($tickets as $ticket) : ?>
-            <div class="column is-4">
+            <div class="column is-one-third">
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
                             <?= htmlspecialchars_decode(substr($ticket['title'], 0, 30), ENT_QUOTES) ?>
                             &nbsp;
                             <?php if ($ticket['priority'] == 'Low') : ?>
-                                <span class="tag"><?= $ticket['priority'] ?></span>
+                                <span class="tag is-light"><?= $ticket['priority'] ?></span>
                             <?php elseif ($ticket['priority'] == 'Medium') : ?>
                                 <span class="tag is-warning"><?= $ticket['priority'] ?></span>
                             <?php elseif ($ticket['priority'] == 'High') : ?>
@@ -83,3 +84,5 @@ if (empty($tickets)) {
     </div>
 </section>
 <!-- END YOUR CONTENT -->
+
+

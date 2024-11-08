@@ -1,5 +1,6 @@
+<!-- BEGIN PAGE HEADER -->
 <header class="container"> 
-    
+
     <!-- BEGIN MAIN NAV -->
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
@@ -98,7 +99,7 @@
                     <span class="icon is-large">
                         <i class="fab fa-2x fa-pagelines"></i>
                     </span>
-                    <span>Your call to action goes here</span>
+                    <span>DolFans are the best!</span>
                 </a>
             </div>
         </section>
