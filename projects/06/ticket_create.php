@@ -51,68 +51,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- BEGIN HTML CONTENT -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Ticket</title>
-    <!-- Include Bulma CSS for styling -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <!-- Include Font Awesome for icons (optional) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <?php include 'templates/head.php'; ?>
 </head>
 <body>
-<section class="section">
-    <div class="container">
-        <h1 class="title">Create Ticket</h1>
+    <?php include 'templates/nav.php'; ?>
 
-        <?php if (!empty($message)) : ?>
-            <div class="notification is-danger">
-                <?= $message; ?>
-            </div>
-        <?php endif; ?>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Create Ticket</h1>
 
-        <form action="" method="post">
-            <div class="field">
-                <label class="label">Title</label>
-                <div class="control">
-                    <input class="input" type="text" name="title" placeholder="Ticket title" required>
+            <?php if (!empty($message)) : ?>
+                <div class="notification is-danger">
+                    <?= $message; ?>
                 </div>
-            </div>
+            <?php endif; ?>
 
-            <div class="field">
-                <label class="label">Description</label>
-                <div class="control">
-                    <textarea class="textarea" name="description" placeholder="Ticket description" required></textarea>
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Priority</label>
-                <div class="control">
-                    <div class="select">
-                        <select name="priority">
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
+            <form action="" method="post">
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <input class="input" type="text" name="title" placeholder="Ticket title" required>
                     </div>
                 </div>
-            </div>
 
-            <div class="field is-grouped">
-                <div class="control">
-                    <button type="submit" class="button is-link">Create Ticket</button>
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <textarea class="textarea" name="description" placeholder="Ticket description" required></textarea>
+                    </div>
                 </div>
-                <div class="control">
-                    <a href="tickets.php" class="button is-link is-light">Cancel</a>
+
+                <div class="field">
+                    <label class="label">Priority</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-</section>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-link">Create Ticket</button>
+                    </div>
+                    <div class="control">
+                        <a href="tickets.php" class="button is-link is-light">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <?php include 'templates/footer.php'; ?>
 </body>
 </html>
-<!-- END HTML CONTENT -->
+

@@ -23,7 +23,9 @@ if (isset($_GET['id'])) {
     $ticket = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$ticket) {
-        echo "A ticket with that ID does not exist.";
+        // Redirect if the ticket does not exist
+        $_SESSION['messages'][] = "A ticket with that ID does not exist.";
+        header("Location: tickets.php");
         exit();
     }
 
@@ -52,12 +54,15 @@ if (isset($_GET['id'])) {
             exit();
         } catch (Exception $e) {
             $pdo->rollBack();
-            echo "An error occurred while deleting the ticket: " . $e->getMessage();
+            $_SESSION['messages'][] = "An error occurred while deleting the ticket.";
+            header("Location: tickets.php");
             exit();
         }
     }
 } else {
-    echo "No ticket ID specified.";
+    // Redirect if no ticket ID is specified
+    $_SESSION['messages'][] = "No ticket ID specified.";
+    header("Location: tickets.php");
     exit();
 }
 ?>
@@ -86,6 +91,8 @@ if (isset($_GET['id'])) {
     <?php include 'templates/footer.php'; ?>
 </body>
 </html>
+
+
 
 
 

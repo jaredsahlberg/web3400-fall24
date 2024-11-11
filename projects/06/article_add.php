@@ -1,17 +1,16 @@
 <?php
 // Step 1: Include config.php file
 include 'config.php';
+
 // Step 2: Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
-    // Redirect user to login page or display an error message
+    // Redirect user to login page with an error message
     $_SESSION['messages'][] = "You must be an administrator to access that resource.";
     header('Location: login.php');
     exit;
 }
-/* Step 3: Implement form handling logic to insert the new article into the database. 
-   You must update the SQL INSERT statement, and when the record is successfully created, 
-   redirect back to the `articles.php` page with the message "The article was successfully added."
-*/
+
+// Step 3: Implement form handling logic to insert the new article into the database.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);
@@ -28,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute([$title, $content, $author_id, $is_featured, $is_published])) {
         // Redirect back to the articles.php page with a success message
         $_SESSION['messages'][] = "The article was successfully added.";
-        echo '<meta http-equiv="refresh" content="0;url=articles.php">';
+        header('Location: articles.php');
         exit;
     } else {
-        // Handle error (optional)
+        // Handle error
         $_SESSION['messages'][] = "An error occurred while adding the article.";
     }
 }
@@ -71,3 +70,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 <!-- END YOUR CONTENT -->
 <?php include 'templates/footer.php'; ?>
+

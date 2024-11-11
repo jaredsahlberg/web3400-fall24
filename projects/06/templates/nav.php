@@ -107,12 +107,14 @@
     <?php endif; ?>
 
     <?php if (!empty($_SESSION['messages'])) : ?>
-        <section class="notification is-warning">
-            <button class="delete"></button>
-            <?php echo implode('<br>', $_SESSION['messages']);
-            $_SESSION['messages'] = []; // Clear the user responses ?>
-        </section>
-    <?php endif; ?>
+    <section class="notification is-warning">
+        <button class="delete"></button>
+        <?php foreach ($_SESSION['messages'] as $message) : ?>
+            <p><?= $message ?></p>
+        <?php endforeach; ?>
+        <?php $_SESSION['messages'] = []; // Clears the user responses ?>
+    </section>
+<?php endif; ?>
 
 </header>
 <!-- END PAGE HEADER -->

@@ -2,6 +2,11 @@
 // Include the configuration file to access the database and start the session if not already started
 include 'config.php';
 
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     header("Location: login.php");
@@ -42,11 +47,14 @@ if (isset($_GET['id'])) {
             header("Location: tickets.php");
             exit();
         } else {
-            echo "Error: Unable to update the ticket.";
+            $_SESSION['messages'][] = "Error: Unable to update the ticket.";
+            header("Location: ticket_edit.php?id=$ticket_id");
+            exit();
         }
     }
 } else {
-    echo "No ticket ID specified.";
+    $_SESSION['messages'][] = "No ticket ID specified.";
+    header("Location: tickets.php");
     exit();
 }
 ?>
@@ -56,7 +64,7 @@ if (isset($_GET['id'])) {
 <head>
     <?php include 'templates/head.php'; ?>
 </head>
-<body>
+<body class="has-navbar-fixed-top">
     <?php include 'templates/nav.php'; ?>
 
     <!-- BEGIN YOUR CONTENT -->
@@ -104,3 +112,5 @@ if (isset($_GET['id'])) {
     <?php include 'templates/footer.php'; ?>
 </body>
 </html>
+
+

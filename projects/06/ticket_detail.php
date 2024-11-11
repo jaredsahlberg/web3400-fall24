@@ -23,9 +23,10 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $ticket = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // If no ticket with the specified ID is found, display an error
+    // If no ticket with the specified ID is found, redirect to tickets page with a message
     if (!$ticket) {
-        echo "A ticket with that ID does not exist.";
+        $_SESSION['messages'][] = "A ticket with that ID does not exist.";
+        header("Location: tickets.php");
         exit();
     }
 
@@ -50,7 +51,8 @@ if (isset($_GET['id'])) {
     $commentStmt->execute();
     $comments = $commentStmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
-    echo "No ticket ID specified.";
+    $_SESSION['messages'][] = "No ticket ID specified.";
+    header("Location: tickets.php");
     exit();
 }
 
@@ -73,104 +75,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['msg'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Detail</title>
-    <!-- Bulma CSS for styling -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <?php include 'templates/head.php'; ?>
 </head>
 <body class="has-navbar-fixed-top">
+    <?php include 'templates/nav.php'; ?>
 
-<!-- BEGIN YOUR CONTENT -->
-<section class="section">
-    <h1 class="title">Ticket Detail</h1>
-    <p class="subtitle">
-        <a href="tickets.php">View all tickets</a>
-    </p>
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                <?= htmlspecialchars($ticket['title'], ENT_QUOTES) ?>
-                &nbsp;
-                <?php if ($ticket['priority'] == 'Low') : ?>
-                    <span class="tag"><?= $ticket['priority'] ?></span>
-                <?php elseif ($ticket['priority'] == 'Medium') : ?>
-                    <span class="tag is-warning"><?= $ticket['priority'] ?></span>
-                <?php elseif ($ticket['priority'] == 'High') : ?>
-                    <span class="tag is-danger"><?= $ticket['priority'] ?></span>
-                <?php endif; ?>
-            </p>
-            <button class="card-header-icon">
-                <a href="ticket_detail.php?id=<?= $ticket['id'] ?>">
-                    <span class="icon">
-                        <?php if ($ticket['status'] == 'Open') : ?>
-                            <i class="far fa-clock fa-2x"></i>
-                        <?php elseif ($ticket['status'] == 'In Progress') : ?>
-                            <i class="fas fa-tasks fa-2x"></i>
-                        <?php elseif ($ticket['status'] == 'Closed') : ?>
-                            <i class="fas fa-times fa-2x"></i>
-                        <?php endif; ?>
-                    </span>
-                </a>
-            </button>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                <time datetime="2016-1-1">Created: <?= date('F dS, G:ia', strtotime($ticket['created_at'])) ?></time>
-                <br>
-                <p><?= htmlspecialchars($ticket['description'], ENT_QUOTES) ?></p>
-            </div>
-        </div>
-        <footer class="card-footer">
-            <a href="ticket_detail.php?id=<?= $ticket['id'] ?>&status=Closed" class="card-footer-item">
-                <span class="icon"><i class="fas fa-times fa-2x"></i></span>
-                <span>&nbsp;Close</span>
-            </a>
-            <a href="ticket_detail.php?id=<?= $ticket['id'] ?>&status=In Progress" class="card-footer-item">
-                <span><i class="fas fa-tasks fa-2x"></i></span>
-                <span>&nbsp;In Progress</span>
-            </a>
-            <a href="ticket_detail.php?id=<?= $ticket['id'] ?>&status=Open" class="card-footer-item">
-                <span><i class="far fa-clock fa-2x"></i></span>
-                <span>&nbsp;Re-Open</span>
-            </a>
-        </footer>
-    </div>
-    <hr>
-    <div class="block">
-        <form action="" method="post">
-            <div class="field">
-                <label class="label"></label>
-                <div class="control">
-                    <textarea name="msg" class="textarea" placeholder="Enter your comment here..." required></textarea>
-                </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <button class="button is-link">Post Comment</button>
-                </div>
-            </div>
-        </form>
-        <hr>
-        <div class="content">
-            <h3 class="title is-4">Comments</h3>
-            <?php foreach ($comments as $comment) : ?>
-                <p class="box">
-                    <span><i class="fas fa-comment"></i></span>
-                    <?= date('F dS, G:ia', strtotime($comment['created_at'])) ?>
-                    <br>
-                    <?= nl2br(htmlspecialchars($comment['comment'], ENT_QUOTES)) ?>
-                    <br>
+    <!-- BEGIN YOUR CONTENT -->
+    <section class="section">
+        <h1 class="title">Ticket Detail</h1>
+        <p class="subtitle">
+            <a href="tickets.php">View all tickets</a>
+        </p>
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <?= htmlspecialchars($ticket['title'], ENT_QUOTES) ?>
+                    &nbsp;
+                    <?php if ($ticket['priority'] == 'Low') : ?>
+                        <span class="tag"><?= $ticket['priority'] ?></span>
+                    <?php elseif ($ticket['priority'] == 'Medium') : ?>
+                        <span class="tag is-warning"><?= $ticket['priority'] ?></span>
+                    <?php elseif ($ticket['priority'] == 'High') : ?>
+                        <span class="tag is-danger"><?= $ticket['priority'] ?></span>
+                    <?php endif; ?>
                 </p>
-            <?php endforeach; ?>
+                <button class="card-header-icon">
+                    <a href="ticket_detail.php?id=<?= $ticket['id'] ?>">
+                        <span class="icon">
+                            <?php if ($ticket['status'] == 'Open') : ?>
+                                <i class="far fa-clock fa-2x"></i>
+                            <?php elseif ($ticket['status'] == 'In Progress') : ?>
+                                <i class="fas fa-tasks fa-2x"></i>
+                            <?php elseif ($ticket['status'] == 'Closed') : ?>
+                                <i class="fas fa-times fa-2x"></i>
+                            <?php endif; ?>
+                        </span>
+                    </a>
+                </button>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <time datetime="2016-1-1">Created: <?= date('F dS, G:ia', strtotime($ticket['created_at'])) ?></time>
+                    <br>
+                    <p><?= htmlspecialchars($ticket['description'], ENT_QUOTES) ?></p>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="ticket_detail.php?id=<?= $ticket['id'] ?>&status=Closed" class="card-footer-item">
+                    <span class="icon"><i class="fas fa-times fa-2x"></i></span>
+                    <span>&nbsp;Close</span>
+                </a>
+                <a href="ticket_detail.php?id=<?= $ticket['id'] ?>&status=In Progress" class="card-footer-item">
+                    <span><i class="fas fa-tasks fa-2x"></i></span>
+                    <span>&nbsp;In Progress</span>
+                </a>
+                <a href="ticket_detail.php?id=<?= $ticket['id'] ?>&status=Open" class="card-footer-item">
+                    <span><i class="far fa-clock fa-2x"></i></span>
+                    <span>&nbsp;Re-Open</span>
+                </a>
+            </footer>
         </div>
-    </div>
-</section>
-<!-- END YOUR CONTENT -->
+        <hr>
+        <div class="block">
+            <form action="" method="post">
+                <div class="field">
+                    <label class="label"></label>
+                    <div class="control">
+                        <textarea name="msg" class="textarea" placeholder="Enter your comment here..." required></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-link">Post Comment</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <div class="content">
+                <h3 class="title is-4">Comments</h3>
+                <?php foreach ($comments as $comment) : ?>
+                    <p class="box">
+                        <span><i class="fas fa-comment"></i></span>
+                        <?= date('F dS, G:ia', strtotime($comment['created_at'])) ?>
+                        <br>
+                        <?= nl2br(htmlspecialchars($comment['comment'], ENT_QUOTES)) ?>
+                        <br>
+                    </p>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+    <!-- END YOUR CONTENT -->
 
+    <?php include 'templates/footer.php'; ?>
 </body>
 </html>
+
 
 
 
