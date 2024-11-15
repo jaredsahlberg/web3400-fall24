@@ -11,19 +11,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 // Step 3: Prepare the SQL query template to select all posts from the database
-// ex. $stmt = $pdo->prepare('SELECT articles.*, users.full_name AS author FROM articles JOIN users ON articles.author_id = users.id ORDER BY `created_at` DESC');
 $stmt = $pdo->prepare('SELECT articles.*, users.full_name AS author FROM articles JOIN users ON articles.author_id = users.id ORDER BY `created_at` DESC');
 
 // Step 4: Execute the query
-// ex. $stmt->execute();
 $stmt->execute();
 
 // Step 5: Fetch and store the results in the $articles associative array
-// ex. $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Step 6: Check if the query returned any rows. If not, display the message: "There are no articles in the database."
-// ex. if (!$articles) {...}
 if (!$articles) {
     $_SESSION['messages'][] = 'There are no articles in the database.';
     exit;
