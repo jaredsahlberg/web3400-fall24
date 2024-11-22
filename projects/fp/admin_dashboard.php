@@ -143,7 +143,7 @@ $contactMessages = $contactStmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="level-item">
                             <div>
-                                <div class="heading">Favorites</div>
+                                <div class="heading">Favs</div>
                                 <div class="title is-5"><?= $kpiResults['average_favs_per_article'] ?></div>
                             </div>
                         </div>
