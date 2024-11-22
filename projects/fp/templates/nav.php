@@ -3,12 +3,9 @@
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="index.php">
-                <span class="icon-text">
-                    <span class="icon">
-                        <i class="fas fa-yin-yang fa-lg"></i>
-                    </span>
-                    <span>&nbsp;<?= $siteName ?></span>
-                </span>
+            <img src="images/dolphinlogo.jpg" alt="Miami Dolphins Logo" class="image is-48x48" style="max-height: 40px; border-radius: 50%;">
+
+                <span>&nbsp;<?= $siteName ?></span>
             </a>
             <a class="navbar-burger" aria-label="menu" aria-expanded="false">
                 <span aria-hidden="true"></span>
@@ -118,6 +115,7 @@
     <?php endif; ?>
 </header>
 <!-- END PAGE HEADER -->
+
 
 
 
