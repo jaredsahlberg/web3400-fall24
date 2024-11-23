@@ -11,19 +11,19 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 // Step 3: Prepare the SQL query template to select all users from the database
-// ex. $stmt = $pdo->prepare('SQL GOES HERE...');
+
 $stmt = $pdo->prepare("SELECT * FROM `users` WHERE 1");
 
 // Step 4: Execute the query
-// ex. $stmt->execute();
+
 $stmt->execute();
 
 // Step 5: Fetch and store the results in the $users associative array
-// ex. $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Step 6: Check if the query returned any rows. If not, display the message: "There are no user records in the database."
-// ex. if (!$users) {...}
+
 if (!$users) {
     $_SESSION['messages'][] = "There are no user records in the database.";
 }

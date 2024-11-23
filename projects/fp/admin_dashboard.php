@@ -1,14 +1,18 @@
 <?php
+// Step 1: Include config.php file
 include 'config.php';
-include 'templates/head.php';
-include 'templates/nav.php';
 
-// Secure the page and allow only admin users
+
+
+// Step 2: Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
+    // Redirect user to login page or display an error message
     $_SESSION['messages'][] = "You must be an administrator to access this resource.";
     header('Location: login.php');
     exit();
 }
+include 'templates/head.php';
+include 'templates/nav.php';
 
 // Define KPI Queries
 $kpiQueries = [

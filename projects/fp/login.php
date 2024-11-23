@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = $user['full_name'];
 
     //set the activation status for the user
-    //Deprecated: substr(): Passing null to parameter #1 ($string) of type string is deprecated in /workspaces/web3400-fall24/projects/03/login.php on line 21
+    
     $accountActivated = substr($activation_code, 0, 9) === 'activated' ? true : false;
 
     // if user account exists and is activated and the password is verified then log them in

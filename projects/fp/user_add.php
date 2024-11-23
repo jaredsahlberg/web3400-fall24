@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize inputs
     $full_name = htmlspecialchars($_POST['full_name'] ?? '', ENT_QUOTES, 'UTF-8');
     $email = htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8');
-    $password = password_hash($_POST['password'] ?? '', PASSWORD_DEFAULT); // Hash the password
-    $phone = htmlspecialchars($_POST['phone'] ?? '', ENT_QUOTES, 'UTF-8'); // Handle phone gracefully
-    $role = htmlspecialchars($_POST['role'] ?? 'user', ENT_QUOTES, 'UTF-8'); // Default to 'user'
+    $password = password_hash($_POST['password'] ?? '', PASSWORD_DEFAULT); 
+    $phone = htmlspecialchars($_POST['phone'] ?? '', ENT_QUOTES, 'UTF-8'); 
+    $role = htmlspecialchars($_POST['role'] ?? 'user', ENT_QUOTES, 'UTF-8'); 
 
     // Check for required fields
     if (empty($full_name) || empty($email) || empty($password)) {
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare('INSERT INTO users (full_name, email, pass_hash, phone, role, created_on) VALUES (:full_name, :email, :pass_hash, :phone, :role, NOW())');
             $stmt->bindParam(':full_name', $full_name, PDO::PARAM_STR);
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->bindParam(':pass_hash', $password, PDO::PARAM_STR); // Use pass_hash
+            $stmt->bindParam(':pass_hash', $password, PDO::PARAM_STR); 
             $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
             $stmt->bindParam(':role', $role, PDO::PARAM_STR);
 

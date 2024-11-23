@@ -27,7 +27,6 @@ if (isset($_GET['id'])) {
 }
 
 // Step 4: Check if $_GET['confirm'] == 'yes'. This means they clicked the 'yes' button to confirm the removal of the record. Prepare and execute a SQL DELETE statement where the user id == the $_GET['id']. Else (meaning they clicked 'no'), return them to the users_manage.php page.
-// prepare a SQL statment: DELETE FROM 'users' WHERE id = ?
 if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
     // Prepare and execute the DELETE statement
     $deleteStmt = $pdo->prepare("DELETE FROM `users` WHERE `id` = ?");
