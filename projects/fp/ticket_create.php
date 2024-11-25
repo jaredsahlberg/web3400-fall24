@@ -93,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="control">
                         <div class="select">
                             <select name="priority">
-                                <option value="Low">Low</option>
-                                <option value="Medium" selected>Medium</option>
+                                <option value="Low" selected>Low</option>
+                                <option value="Medium">Medium</option>
                                 <option value="High">High</option>
                             </select>
                         </div>
