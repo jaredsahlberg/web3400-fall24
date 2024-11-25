@@ -72,61 +72,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php endif; ?>
 
-            <div class="columns">
-                <!-- Quick Ticket Add Form -->
-                <div class="column is-6">
-                    <div class="box">
-                        <p class="panel-heading">Quick Add Ticket</p>
-                        <form action="" method="post">
-                            <div class="field">
-                                <label class="label">Title</label>
-                                <div class="control">
-                                    <input class="input" type="text" name="title" placeholder="Enter ticket title" required>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label">Description</label>
-                                <div class="control">
-                                    <textarea class="textarea" name="description" placeholder="Enter ticket description" required></textarea>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label">Priority</label>
-                                <div class="control">
-                                    <div class="select">
-                                        <select name="priority">
-                                            <option value="Low">Low</option>
-                                            <option value="Medium" selected>Medium</option>
-                                            <option value="High">High</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field is-grouped">
-                                <div class="control">
-                                    <button type="submit" class="button is-link">Add Ticket</button>
-                                </div>
-                                <div class="control">
-                                    <button type="reset" class="button is-light">Cancel</button>
-                                </div>
-                            </div>
-                        </form>
+            <!-- Ticket Creation Form -->
+            <form action="" method="post">
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <input class="input" type="text" name="title" placeholder="Enter ticket title" required>
                     </div>
                 </div>
-                <!-- Additional content or forms can be added to the second column if necessary -->
-                <div class="column is-6">
-                    <!-- Placeholder for other forms or content -->
+
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <textarea class="textarea" name="description" placeholder="Enter ticket description" required></textarea>
+                    </div>
                 </div>
-            </div>
+
+                <div class="field">
+                    <label class="label">Priority</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="button is-link">Create Ticket</button>
+                    <button type="reset" class="button is-light">Cancel</button>
+                </div>
+            </form>
         </div>
     </section>
 
     <?php include 'templates/footer.php'; ?>
 </body>
 </html>
+
 
 
 

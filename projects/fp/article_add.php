@@ -41,81 +41,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include 'templates/nav.php'; ?>
 
 <section class="section">
-    <h1 class="title">Write an Article</h1>
-    <div class="columns">
-        <!-- Quick Article Add Form -->
-        <div class="column is-6">
-            <div class="box">
-                <p class="panel-heading">Quick Add Article</p>
-                <form action="article_add.php" method="post">
-                    <div class="field">
-                        <label class="label">Title</label>
-                        <div class="control">
-                            <input class="input" type="text" name="title" placeholder="Enter article title" required>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Content</label>
-                        <div class="control">
-                            <textarea class="textarea" name="content" placeholder="Enter article content" required></textarea>
-                        </div>
-                    </div>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button type="submit" class="button is-link">Add Article</button>
-                        </div>
-                        <div class="control">
-                            <button type="reset" class="button is-light">Cancel</button>
-                        </div>
-                    </div>
-                </form>
+    <div class="container">
+        <h1 class="title">Write an article</h1>
+        <form action="article_add.php" method="post">
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    <input class="input" type="text" name="title" placeholder="Enter article title" required>
+                </div>
             </div>
-        </div>
-
-        <!-- Quick Ticket Add Form -->
-        <div class="column is-6">
-            <div class="box">
-                <p class="panel-heading">Quick Add Ticket</p>
-                <form action="ticket_create.php" method="post">
-                    <div class="field">
-                        <label class="label">Title</label>
-                        <div class="control">
-                            <input class="input" type="text" name="title" placeholder="Enter ticket title" required>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Description</label>
-                        <div class="control">
-                            <textarea class="textarea" name="description" placeholder="Enter ticket description" required></textarea>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Priority</label>
-                        <div class="control">
-                            <div class="select">
-                                <select name="priority">
-                                    <option value="Low">Low</option>
-                                    <option value="Medium" selected>Medium</option>
-                                    <option value="High">High</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button type="submit" class="button is-link">Add Ticket</button>
-                        </div>
-                        <div class="control">
-                            <button type="reset" class="button is-light">Cancel</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="field">
+                <label class="label">Content</label>
+                <div class="control">
+                    <textarea class="textarea" name="content" placeholder="Enter article content" required></textarea>
+                </div>
             </div>
-        </div>
+            <div class="buttons">
+                <button type="submit" class="button is-link">Add Post</button>
+                <button type="reset" class="button is-light">Cancel</button>
+            </div>
+        </form>
     </div>
 </section>
 
 <?php include 'templates/footer.php'; ?>
+
+
+
+
 
 
 
