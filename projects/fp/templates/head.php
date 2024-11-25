@@ -10,4 +10,22 @@
     <title><?= $siteName ?></title>
 </head>
 <body class="has-navbar-fixed-top">
+    <!-- Add your content here -->
+
+    <!-- JavaScript for notification close buttons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const notification = this.parentElement;
+                    if (notification) {
+                        notification.remove();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
 

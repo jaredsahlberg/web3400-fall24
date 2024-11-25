@@ -1,9 +1,6 @@
 <?php
 // Step 1: Include config.php file
 include 'config.php';
-
-
-
 // Step 2: Secure and only allow 'admin' users to access this page
 if (!isset($_SESSION['loggedin']) || $_SESSION['user_role'] !== 'admin') {
     // Redirect user to login page or display an error message
@@ -58,7 +55,7 @@ $contactMessages = $contactStmt->fetchAll(PDO::FETCH_ASSOC);
 <section class="section">
     <div class="container">
         <h1 class="title">Administrator Dashboard</h1>
-
+        
         <!-- Count Boxes -->
         <div class="columns is-multiline">
             <!-- Articles KPI -->
@@ -293,8 +290,9 @@ $contactMessages = $contactStmt->fetchAll(PDO::FETCH_ASSOC);
                             <label class="label">Role</label>
                             <div class="control">
                                 <div class="select">
-                                    <select name="role">
+                                    <select name="role" required>
                                         <option value="User">User</option>
+                                        <option value="Editor">Editor</option>
                                         <option value="Admin">Admin</option>
                                     </select>
                                 </div>
